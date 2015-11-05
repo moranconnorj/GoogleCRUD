@@ -1,8 +1,8 @@
-var table = document.getElementById("myTable");
-var tbody = document.getElementsByTagName("tr");
+var table = $('table')
+var tabrow = document.getElementsByTagName('tr');
 $variable = [];
-// var table = document.createElement("table");
 var url = "https://spreadsheets.google.com/feeds/cells/1sYkU_8raV14Bqm33dWcaksC3iMm73DH9OMsooxSMItM/od6/public/values?alt=json";
+
 $.getJSON( url, function( data ) {
     assignVariable(data);
 })
@@ -13,19 +13,20 @@ function assignVariable(data){
 }
 
 var declareVars = function() {
-    //console.log($variable);
     for (var i = 0; i < $variable.feed.entry.length; i++){
         var row = $variable.feed.entry[i].gs$cell.row;
         var col = $variable.feed.entry[i].gs$cell.col;
         var txt = $variable.feed.entry[i].gs$cell.$t;
-        //console.log(row, col, txt);
-        var row = table.insertRow(0);
-        var cell = row.insertCell(0);
-        cell.innerHTML = txt;
+        if (!tabrow[row-1]) {
+            var createrow = table[0].insertRow(row-1);
+            var cell = createrow.insertCell(-1);
+            cell.setAttribute("id", row + "-" + col);
+            cell.innerHTML = txt;
+        } 
+        else {
+            var newcell = tabrow[row-1].insertCell(-1);
+            newcell.innerHTML = txt;
+        }
     }
 }
-
-//console.log(table.childNodes)
-console.log($variable)
-
 
