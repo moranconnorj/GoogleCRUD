@@ -55,12 +55,17 @@ addNewRow = function() {
 
 addDone = function() {
 	//creates a Submit button to send to Controller
-    var $done = $('<input type="submit" value="Done" id="done" />');
-    $done.appendTo(addform);                         
+    var $done = $('<input type="submit" value="Done" id="donebutton" />');
+    $done.appendTo(addform); 
+    console.log($(":submit"))
+    $(":submit").click(function() {
+    //Controller.something?
+})                     
 }
 
 getMax()
 createTable()
+
 
 
 $("#addrow").click(function() {
