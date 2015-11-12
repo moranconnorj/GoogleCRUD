@@ -1,8 +1,9 @@
 var table = $('table')
-var tabrow = document.getElementsByTagName('tr');
-var url = "https://spreadsheets.google.com/feeds/cells/1sYkU_8raV14Bqm33dWcaksC3iMm73DH9OMsooxSMItM/od6/public/values?alt=json";
+//var tabrow = document.getElementsByTagName('tr');
+//var url = "https://spreadsheets.google.com/feeds/cells/1sYkU_8raV14Bqm33dWcaksC3iMm73DH9OMsooxSMItM/od6/public/values?alt=json";
 var rowmax = 0;
 var colmax = 0;
+var addrow = $('#form1');
 
 // $.getJSON(url, function(data) {  //need actual model format
 //     $variable = data
@@ -19,7 +20,6 @@ var test = {1:{1:'num', 2:'2', 3:'3', 5:'4'}, 2:{1:'alpha', 2:'a', 3:'b'}, 4:{1:
 //         createCell(row, col, txt)
 //     }
 // }
-
 getMax = function() {
     for (var i = 0;i < Object.keys(test).length; i++){
         if(Object.keys(test)[i] > colmax) {
@@ -39,7 +39,6 @@ getMax = function() {
 getMax()
 
 createTable = function() {
-    // table = {};
     for (var r = 1; r <= rowmax; r++) {
         var tr = table[0].insertRow(-1);
         for (var c = 1; c <= colmax; c++) {
@@ -49,7 +48,7 @@ createTable = function() {
                 cell.innerHTML = test[c][r];
             }
             else {
-                cell.innerHTML = '!';
+                cell.innerHTML = '&nbsp';
             }
         }
     }
@@ -66,9 +65,17 @@ addNewRow = function() {
     }
 }
 
+addDone = function() {
+    var $done = $('<input type="submit" value="Done" id="done" />');
+    $done.appendTo(addrow)                           
+}
+    
+
 $(document).click(function( event ) {
-    if ($(event.target).is('input[value=Enter]')) {
+    if ($(event.target).is('input[id=addrow]')) {
         addNewRow()
+        addDone()
+        document.getElementById("addrow").disabled = true
     }
 })
 //     else if ($(event.target).is('input[value=Edit]')) {
